@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY root /
 
-RUN apk add --update --no-cache supervisor sniproxy docker \
+RUN apk add --update --no-cache supervisor sniproxy \
 	&& chmod 755 /app/entrypoint.sh
 
 ENV SERVERIP=''
