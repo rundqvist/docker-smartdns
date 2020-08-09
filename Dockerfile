@@ -7,7 +7,7 @@ WORKDIR /app
 COPY root /
 
 RUN apk add --update --no-cache supervisor sniproxy \
-	mkdir /app/state \
+	&& mkdir /app/state \
 	&& chmod 755 /app/healthcheck.sh \
 	&& chmod 755 /app/entrypoint.sh
 
