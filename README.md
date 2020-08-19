@@ -1,9 +1,14 @@
-# Docker SmartDNS
-A smart dns container based on Alpine Linux.  
+# Docker SmartDNS for unblocking geo restrictions
+A smart dns container for unblocking geo restrictions.  
 https://hub.docker.com/repository/docker/rundqvist/smartdns
 
+# Appreciate my work?
+Do you find this container useful? Please consider a donation.
+* Flattr (https://flattr.com/@rundqvist)
+* Buy me a coffee (https://www.buymeacoffee.com/rundqvist)
+
 ## Features
-* Unblocks georestrictions
+* Unblocks geo restrictions
 * Compact
 * Docker health check
 
