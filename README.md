@@ -14,20 +14,20 @@ Do you find this container useful? Please consider a donation.
 * Compact
 * Docker health check
 
-## Components
-* OpenVPN
-* Sniproxy
-
-## Supported channels
+## Supported services
 * NRK (https://tv.nrk.no)
 * DR (https://www.dr.dk/drtv/)
 * TVPlayer (https://tvplayer.com/uk/)
 * USTVGO, USTV247 (https://ustvgo.tv, https://ustv247.tv)
 
 ## Requirements
-* An IPVanish VPN account (https://www.ipvanish.com)
+* An IPVanish VPN account [![Sign up](https://img.shields.io/badge/Sign_up-IPVanish_VPN-6fbc44)](https://www.ipvanish.com/?a_bid=48f95966&a_aid=5f3eb2f0be07f)
 * A local DNS server that utilizes dnsmasq (for example Pi-hole, https://hub.docker.com/u/pihole/)
 * Port 80 & 443 available
+
+## Components
+* OpenVPN (https://github.com/OpenVPN/openvpn)
+* Sniproxy (https://github.com/dlundquist/sniproxy)
 
 ## Configuration
 | Variable | Usage |
