@@ -8,7 +8,7 @@ COPY root /
 
 RUN apk add --update --no-cache sniproxy
 
-ENV SERVERIP=''
+ENV HOST_IP=''
 
 VOLUME [ "/etc/dnsmasq.d" ]
 

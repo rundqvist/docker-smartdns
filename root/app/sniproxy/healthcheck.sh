@@ -5,7 +5,7 @@ COUNTRIES="no dk uk"
 
 echo "0" > /app/sniproxy/state/exit
 
-cp -f /etc/sniproxy/sniproxy.template.conf /etc/sniproxy/sniproxy.partial.conf
+cp -f /app/sniproxy/sniproxy.conf /app/sniproxy/sniproxy.partial.conf
 
 echo "${COUNTRIES}" | fold -w 4 -s | while IFS= read -r i; do
     CURRENT_COUNTRY=$(echo $i | sed 's/ *$//g')
@@ -46,13 +46,13 @@ echo "${COUNTRIES}" | fold -w 4 -s | while IFS= read -r i; do
         CURRIP="*"
     fi
 
-    sed -i 's/smartdns-'$CURRENT_COUNTRY'/'$CURRIP'/g' /etc/sniproxy/sniproxy.partial.conf
+    sed -i 's/smartdns-'$CURRENT_COUNTRY'/'$CURRIP'/g' /app/sniproxy/sniproxy.partial.conf
 
 done
 
 RESTART=$(cat /app/sniproxy/state/restart)
 
-mv -f /etc/sniproxy/sniproxy.partial.conf /etc/sniproxy/sniproxy.conf
+mv -f /app/sniproxy/sniproxy.partial.conf /etc/sniproxy/sniproxy.conf
 
 if [ $RESTART -eq 1 ]; then
     echo "[INF] Sniproxy restarting to apply changes..." >> /proc/1/fd/1
