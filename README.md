@@ -24,7 +24,7 @@ Do you find this container useful? Please consider a donation.
 * Port 80 & 443 available
 
 ## Components
-* OpenVPN (https://github.com/OpenVPN/openvpn)
+* OpenVPN container as base (https://hub.docker.com/r/rundqvist/openvpn)
 * Sniproxy (https://github.com/dlundquist/sniproxy)
 
 ## Setup
