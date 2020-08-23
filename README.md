@@ -112,4 +112,4 @@ https://hub.docker.com/r/rundqvist/openvpn
 Just surf to one of the supported sites and watch without geo restrictions.
 
 ## Issues
-Please report issues at https://github.com/rundqvist/smartdns/issues
+Please report issues at https://github.com/rundqvist/docker-smartdns/issues
