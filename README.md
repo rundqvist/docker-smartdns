@@ -25,7 +25,7 @@ Do you find this container useful? Please consider a donation.
 
 ## Components
 * OpenVPN container as base (https://hub.docker.com/r/rundqvist/openvpn)
-* Sniproxy (https://github.com/dlundquist/sniproxy)
+* SNI Proxy (https://github.com/dlundquist/sniproxy)
 
 ## Setup
 
@@ -75,7 +75,7 @@ $ docker run \
   -e 'VPN_PASSWORD=[vpn password]' \
   -e 'VPN_COUNTRY=NO' \
   --net smartdns \
-  rundqvist/smartdns-vpn
+  rundqvist/openvpn-sniproxy
 
 $ docker run \
   -d \
@@ -88,7 +88,7 @@ $ docker run \
   -e 'VPN_PASSWORD=[vpn password]' \
   -e 'VPN_COUNTRY=DK' \
   --net smartdns \
-  rundqvist/smartdns-vpn
+  rundqvist/openvpn-sniproxy
 
 $ docker run \
   -d \
@@ -101,7 +101,7 @@ $ docker run \
   -e 'VPN_PASSWORD=[vpn password]' \
   -e 'VPN_COUNTRY=UK' \
   --net smartdns \
-  rundqvist/smartdns-vpn
+  rundqvist/openvpn-sniproxy
 ```
 
 ### Configuration
