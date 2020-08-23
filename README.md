@@ -11,28 +11,21 @@ Do you find this container useful? Please consider a donation.
 
 ## Features
 * Unblocks geo restrictions
-* Compact
-* Docker health check
 
 ## Supported services
 * NRK (https://tv.nrk.no)
 * DR (https://www.dr.dk/drtv/)
-* TVPlayer (https://tvplayer.com/uk/)
+* TVPlayer (https://tvplayer.com/uk/, account needed)
 * USTVGO, USTV247 (https://ustvgo.tv, https://ustv247.tv)
 
 ## Requirements
-* An IPVanish VPN account [![Sign up](https://img.shields.io/badge/Affiliate-IPVanish_VPN-6fbc44)](https://www.ipvanish.com/?a_bid=48f95966&a_aid=5f3eb2f0be07f)
+* A supported VPN account [![Sign up](https://img.shields.io/badge/Affiliate-IPVanish_VPN-6fbc44)](https://www.ipvanish.com/?a_bid=48f95966&a_aid=5f3eb2f0be07f)
 * A local DNS server that utilizes dnsmasq (for example Pi-hole, https://hub.docker.com/u/pihole/)
 * Port 80 & 443 available
 
 ## Components
 * OpenVPN (https://github.com/OpenVPN/openvpn)
 * Sniproxy (https://github.com/dlundquist/sniproxy)
-
-## Configuration
-| Variable | Usage |
-|----------|-------|
-| SERVERIP | IP of the machine where SmartDNS and DNS server is running |
 
 ## Setup
 
@@ -43,7 +36,9 @@ $ docker network create --subnet=172.20.0.0/16 smartdns
 
 ### Setup main container
 Make sure docker is allowed to create a file in the /path/to/etc/dnsmasq.d/ folder.
-Also possible to map this directory to a temp-folder and copy the 10-smartdns.conf-file to your /etc/dnsmasq.d/-folder.
+
+If not, map this directory to a temp-folder and copy the 10-smartdns.conf-file to your /etc/dnsmasq.d/-folder.
+
 ```
 $ sudo docker run \
   -d \
@@ -52,15 +47,21 @@ $ sudo docker run \
   -p 443:443 \
   -v /path/to/etc/dnsmasq.d:/etc/dnsmasq.d/ \
   --net smartdns \
-  -e 'SERVERIP=[your server ip]' \
+  -e 'HOST_IP=[your server ip]' \
   rundqvist/smartdns
 ```
+
+### Configuration
+| Variable | Usage |
+|----------|-------|
+| HOST_IP | IP of the machine where SmartDNS and DNS server is running |
+
 
 ### Restart DNS Server
 Restart your DNS server to include the 10-smartdns.conf-file in your config.
 
-### Setup VPN's
-Do not change the --name.
+## Setup SmartDNS VPN's
+IMPORTANT! Do not change the --name of the containers.
 
 ```
 $ docker run \
@@ -68,11 +69,11 @@ $ docker run \
   --cap-add=NET_ADMIN \
   --device=/dev/net/tun \
   --name=smartdns-no \
-  --dns 84.200.69.80 \
-  --dns 84.200.70.40 \
-  -e 'USERNAME=[ipvanish username]' \
-  -e 'PASSWORD=[ipvanish password]' \
-  -e 'COUNTRY=NO' \
+  --dns 1.1.1.1 \
+  -e 'VPN_PROVIDER=[vpn provider]' \
+  -e 'VPN_USERNAME=[vpn username]' \
+  -e 'VPN_PASSWORD=[vpn password]' \
+  -e 'VPN_COUNTRY=NO' \
   --net smartdns \
   rundqvist/smartdns-vpn
 
@@ -81,11 +82,11 @@ $ docker run \
   --cap-add=NET_ADMIN \
   --device=/dev/net/tun \
   --name=smartdns-dk \
-  --dns 84.200.69.80 \
-  --dns 84.200.70.40 \
-  -e 'USERNAME=[ipvanish username]' \
-  -e 'PASSWORD=[ipvanish password]' \
-  -e 'COUNTRY=DK' \
+  --dns 1.1.1.1 \
+  -e 'VPN_PROVIDER=[vpn provider]' \
+  -e 'VPN_USERNAME=[vpn username]' \
+  -e 'VPN_PASSWORD=[vpn password]' \
+  -e 'VPN_COUNTRY=DK' \
   --net smartdns \
   rundqvist/smartdns-vpn
 
@@ -94,16 +95,18 @@ $ docker run \
   --cap-add=NET_ADMIN \
   --device=/dev/net/tun \
   --name=smartdns-uk \
-  --dns 84.200.69.80 \
-  --dns 84.200.70.40 \
-  -e 'USERNAME=[ipvanish username]' \
-  -e 'PASSWORD=[ipvanish password]' \
-  -e 'COUNTRY=UK' \
+  --dns 1.1.1.1 \
+  -e 'VPN_PROVIDER=[vpn provider]' \
+  -e 'VPN_USERNAME=[vpn username]' \
+  -e 'VPN_PASSWORD=[vpn password]' \
+  -e 'VPN_COUNTRY=UK' \
   --net smartdns \
   rundqvist/smartdns-vpn
 ```
-### Set DNS ip in your router
-Update the DNS ip in your router to your server ip.
+
+### Configuration
+Please see OpenVPN container for VPN configuration.
+https://hub.docker.com/r/rundqvist/openvpn
 
 ## Use
 Just surf to one of the supported sites and watch without geo restrictions.
