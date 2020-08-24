@@ -1,6 +1,6 @@
 # Docker SmartDNS for unblocking geo restrictions
 A smart dns container for unblocking geo restrictions.  
-https://hub.docker.com/repository/docker/rundqvist/smartdns
+https://hub.docker.com/r/rundqvist/smartdns
 
 # Appreciate my work?
 Do you find this container useful? Please consider a donation.
