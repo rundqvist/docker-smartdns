@@ -20,9 +20,12 @@ Do you find this container useful? Please consider a donation.
 * USTVGO, USTV247 (https://ustvgo.tv, https://ustv247.tv)
 
 ## Requirements
-* A supported VPN account [![Sign up](https://img.shields.io/badge/Affiliate-IPVanish_VPN-6fbc44)](https://www.ipvanish.com/?a_bid=48f95966&a_aid=5f3eb2f0be07f)
 * A local DNS server that utilizes dnsmasq (for example Pi-hole, https://hub.docker.com/u/pihole/)
 * Port 80 & 443 available
+* A supported VPN account (See base image for supported vpn providers: https://hub.docker.com/r/rundqvist/openvpn)
+
+[![Affiliate](https://img.shields.io/badge/Affiliate-IPVanish_VPN-6fbc44)](https://www.ipvanish.com/?a_bid=48f95966&a_aid=5f3eb2f0be07f)
+[![Affiliate](https://img.shields.io/badge/Affiliate-WeVPN-e33866)](https://www.wevpn.com/aff/rundqvist)
 
 ## Components
 * OpenVPN container as base (https://hub.docker.com/r/rundqvist/openvpn)
