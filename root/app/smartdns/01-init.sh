@@ -29,10 +29,10 @@ done
 
 log -i "Creating sniproxy config"
 mkdir -p /etc/sniproxy
-cp -f /app/smartdns/sniproxy.template.conf /etc/sniproxy/sniproxy.conf
+cp -f /app/smartdns/sniproxy.template.conf /app/sniproxy/sniproxy.conf
 
 for table in "http" "https" ; do
-    echo "table $table {" >> /etc/sniproxy/sniproxy.conf
+    echo "table $table {" >> /app/sniproxy/sniproxy.conf
 
     range="80"
     if [ "$table" = "https" ] ; then
@@ -47,12 +47,13 @@ for table in "http" "https" ; do
         domains=$(cat /app/smartdns/smartdns.domain.conf | grep "$service:" | sed 's/.*:\(.*\)/\1/g')
 
         for domain in $domains ; do
-            echo "$domain *:$port" >> /etc/sniproxy/sniproxy.conf
+            echo "$domain *:$port" >> /app/sniproxy/sniproxy.conf
         done
     done
-    echo ".* *"  >> /etc/sniproxy/sniproxy.conf
-    echo "}" >> /etc/sniproxy/sniproxy.conf
+    echo ".* *"  >> /app/sniproxy/sniproxy.conf
+    echo "}" >> /app/sniproxy/sniproxy.conf
 done
+
 #setv VPN_COUNTRY "NO GB"
 
 #sed 's/smartdns-.*/\*/g' /app/smartdns/sniproxy.conf > /etc/sniproxy/sniproxy.conf
