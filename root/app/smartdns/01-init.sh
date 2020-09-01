@@ -18,14 +18,18 @@ for service in $(var SMARTDNS_SERVICES) ; do
     var -a VPN_COUNTRY $country
 done
 
+var port 10
 for country in $(var VPN_COUNTRY) ; do
 
-    line=$(cat /app/smartdns/smartdns.port.conf | grep "$country")
-    port=$range${line:3:2}
+    dict port $country $(var port)
 
-    iptables -A OUTPUT -t nat -o eth0 -p tcp --dport 80$port -j DNAT --to-destination :80
-    iptables -A OUTPUT -t nat -o eth0 -p tcp --dport 81$port -j DNAT --to-destination :443
+    #log -d "iptables -A OUTPUT -t nat -o eth0 -p tcp --dport 80$(var port) -j DNAT --to-destination :80"
+    iptables -A OUTPUT -t nat -o eth0 -p tcp --dport 80$(var port) -j DNAT --to-destination :80
+    iptables -A OUTPUT -t nat -o eth0 -p tcp --dport 81$(var port) -j DNAT --to-destination :443
+
+    var port $(($(var port) + 1))
 done
+var -d port
 
 log -i "Creating sniproxy config"
 mkdir -p /etc/sniproxy
@@ -41,22 +45,18 @@ for table in "http" "https" ; do
 
     for service in $(var SMARTDNS_SERVICES) ; do
         country=$(cat /app/smartdns/smartdns.country.conf | grep "$service" | sed 's/.*:\([A-Z]\)/\1/g')
-        line=$(cat /app/smartdns/smartdns.port.conf | grep "$country")
-        port=$range${line:3:2}
 
         domains=$(cat /app/smartdns/smartdns.domain.conf | grep "$service:" | sed 's/.*:\(.*\)/\1/g')
 
         for domain in $domains ; do
-            echo "$domain *:$port" >> /app/sniproxy/sniproxy.conf
+            echo "$domain *:$range$(dict port $country)" >> /app/sniproxy/sniproxy.conf
+            #log -d "$domain *:$range$(dict port $country) >> /app/sniproxy/sniproxy.conf"
         done
     done
-    echo ".* *"  >> /app/sniproxy/sniproxy.conf
+    echo ".* *" >> /app/sniproxy/sniproxy.conf
     echo "}" >> /app/sniproxy/sniproxy.conf
 done
 
-#setv VPN_COUNTRY "NO GB"
-
-#sed 's/smartdns-.*/\*/g' /app/smartdns/sniproxy.conf > /etc/sniproxy/sniproxy.conf
 
 #log -i "Exporting dnsmasq config to /etc/dnsmasq.d/10-smartdns.conf"
 #sed "s/{IP}/$HOST_IP/g" /app/smartdns/10-smartdns.conf > /etc/dnsmasq.d/10-smartdns.conf
