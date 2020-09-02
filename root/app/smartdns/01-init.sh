@@ -18,12 +18,16 @@ for service in $(var SMARTDNS_SERVICES) ; do
     var -a VPN_COUNTRY $country
 done
 
+#
+# Route all requests to 80/443
+#
 var port 10
 for country in $(var VPN_COUNTRY) ; do
+    
+    log -d "Configuring vpn country $country to use 80$(var port) and 81$(var port)"
 
     dict port $country $(var port)
 
-    #log -d "iptables -A OUTPUT -t nat -o eth0 -p tcp --dport 80$(var port) -j DNAT --to-destination :80"
     iptables -A OUTPUT -t nat -o eth0 -p tcp --dport 80$(var port) -j DNAT --to-destination :80
     iptables -A OUTPUT -t nat -o eth0 -p tcp --dport 81$(var port) -j DNAT --to-destination :443
 
@@ -31,6 +35,11 @@ for country in $(var VPN_COUNTRY) ; do
 done
 var -d port
 
+#
+# Create sniproxy.conf
+#
+
+> /app/smartdns/10-smartdns-tmp.conf
 log -i "Creating sniproxy config"
 mkdir -p /etc/sniproxy
 cp -f /app/smartdns/sniproxy.template.conf /app/sniproxy/sniproxy.conf
@@ -50,13 +59,16 @@ for table in "http" "https" ; do
 
         for domain in $domains ; do
             echo "$domain *:$range$(dict port $country)" >> /app/sniproxy/sniproxy.conf
-            #log -d "$domain *:$range$(dict port $country) >> /app/sniproxy/sniproxy.conf"
+            log -d "$domain *:$range$(dict port $country)"
+
+            d=$(echo "$domain" | sed -e "s/[\\]//g" -e "s/^\([^*]*\*\)\.//g")
+            echo "address=/$d/$(var HOST_IP)" >> /app/smartdns/10-smartdns-tmp.conf
         done
     done
     echo ".* *" >> /app/sniproxy/sniproxy.conf
     echo "}" >> /app/sniproxy/sniproxy.conf
 done
 
-
-#log -i "Exporting dnsmasq config to /etc/dnsmasq.d/10-smartdns.conf"
-#sed "s/{IP}/$HOST_IP/g" /app/smartdns/10-smartdns.conf > /etc/dnsmasq.d/10-smartdns.conf
+cat /app/smartdns/10-smartdns-tmp.conf | sort -u > /app/smartdns/10-smartdns.conf
+rm -f /app/smartdns/10-smartdns-tmp.conf
+cp -f /app/smartdns/10-smartdns.conf /etc/dnsmasq.d/10-smartdns.conf
