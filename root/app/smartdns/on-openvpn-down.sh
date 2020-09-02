@@ -6,6 +6,8 @@ IP=$3 # default gw of tun
 GW=$(echo $IP | sed 's/\([0-9\.]*\)\.[0-9][0-9]*$/\1\.1/g')
 DPORT=$(dict port $COUNTRY)
 
+sleep 1
+
 # -- Clean up old config
 ip route del default via $GW dev $TUN table $TUN
 ip rule del fwmark 0x$DPORT table $TUN
@@ -14,3 +16,5 @@ iptables -D OUTPUT -t mangle -o eth0 -p tcp --dport 81$DPORT -j MARK --set-mark 
 iptables -D POSTROUTING -t nat -o $TUN -j MASQUERADE
 sed -i "/20$DPORT $TUN/d" /etc/iproute2/rt_tables
 # --
+
+sleep 1
