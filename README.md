@@ -33,12 +33,6 @@ Please support the development by making a small donation.
 
 ## Setup
 
-### Create network
-```
-$ docker network create --subnet=172.20.0.0/16 smartdns
-```
-
-### Setup main container
 Make sure docker is allowed to create a file in the /path/to/etc/dnsmasq.d/ folder.
 
 If not, map this directory to a temp-folder and copy the 10-smartdns.conf-file to your /etc/dnsmasq.d/-folder.
