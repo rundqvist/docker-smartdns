@@ -16,7 +16,7 @@ Please support the development by making a small donation.
 ## Supported services
 * NRK (https://tv.nrk.no)
 * DR (https://www.dr.dk/drtv/)
-* TVPlayer (https://tvplayer.com/uk/, account needed)
+* TVPlayer (https://tvplayer.com/, account needed)
 * USTVGO, USTV247 (https://ustvgo.tv, https://ustv247.tv)
 
 ## Requirements
@@ -28,7 +28,7 @@ Please support the development by making a small donation.
 [![Sign up](https://img.shields.io/badge/sign_up-WeVPN-e33866)](https://www.wevpn.com/aff/rundqvist)
 
 ## Components
-* OpenVPN container as base (https://hub.docker.com/r/rundqvist/openvpn)
+* Base container: https://hub.docker.com/r/rundqvist/openvpn-sniproxy
 * SNI Proxy (https://github.com/dlundquist/sniproxy)
 
 ## Setup
@@ -46,12 +46,21 @@ If not, map this directory to a temp-folder and copy the 10-smartdns.conf-file t
 ```
 $ sudo docker run \
   -d \
+  --privileged \
   --name=smartdns \
+  --cap-add=NET_ADMIN \
+  --device=/dev/net/tun \
+  --dns 1.1.1.1 \
+  --dns 1.0.0.1 \
   -p 80:80 \
   -p 443:443 \
   -v /path/to/etc/dnsmasq.d:/etc/dnsmasq.d/ \
-  --net smartdns \
+  -v /path/to/cache:/cache/ \
+  -e 'VPN_PROVIDER=[your vpn provider]' \
+  -e 'VPN_USERNAME=[your vpn username]' \
+  -e 'VPN_PASSWORD=[your vpn password]' \
   -e 'HOST_IP=[your server ip]' \
+  -e 'SMARTDNS_SERVICES=nrk.no dr.dk tvplayer.com ustvgo.com ustv247.tv' \
   rundqvist/smartdns
 ```
 
@@ -59,58 +68,14 @@ $ sudo docker run \
 | Variable | Usage |
 |----------|-------|
 | HOST_IP | IP of the machine where SmartDNS and DNS server is running |
+| SMARTDNS_SERVICES | Services to unblock, separated with one space. Valid values are: nrk.no, dr.dk, tvplayer.com, ustvgo.com and ustv247.tv. |
 
+**IMPORTANT!** Container will create one VPN connection for each country needed. Be careful not to violate the terms of your VPN account.
+
+See https://hub.docker.com/r/rundqvist/openvpn for VPN configuration
 
 ### Restart DNS Server
 Restart your DNS server to include the 10-smartdns.conf-file in your config.
-
-## Setup SmartDNS VPN's
-IMPORTANT! Do not change the --name of the containers.
-
-```
-$ docker run \
-  -d \
-  --cap-add=NET_ADMIN \
-  --device=/dev/net/tun \
-  --name=smartdns-no \
-  --dns 1.1.1.1 \
-  -e 'VPN_PROVIDER=[vpn provider]' \
-  -e 'VPN_USERNAME=[vpn username]' \
-  -e 'VPN_PASSWORD=[vpn password]' \
-  -e 'VPN_COUNTRY=NO' \
-  --net smartdns \
-  rundqvist/openvpn-sniproxy
-
-$ docker run \
-  -d \
-  --cap-add=NET_ADMIN \
-  --device=/dev/net/tun \
-  --name=smartdns-dk \
-  --dns 1.1.1.1 \
-  -e 'VPN_PROVIDER=[vpn provider]' \
-  -e 'VPN_USERNAME=[vpn username]' \
-  -e 'VPN_PASSWORD=[vpn password]' \
-  -e 'VPN_COUNTRY=DK' \
-  --net smartdns \
-  rundqvist/openvpn-sniproxy
-
-$ docker run \
-  -d \
-  --cap-add=NET_ADMIN \
-  --device=/dev/net/tun \
-  --name=smartdns-uk \
-  --dns 1.1.1.1 \
-  -e 'VPN_PROVIDER=[vpn provider]' \
-  -e 'VPN_USERNAME=[vpn username]' \
-  -e 'VPN_PASSWORD=[vpn password]' \
-  -e 'VPN_COUNTRY=UK' \
-  --net smartdns \
-  rundqvist/openvpn-sniproxy
-```
-
-### Configuration
-Please see OpenVPN container for VPN configuration.
-https://hub.docker.com/r/rundqvist/openvpn
 
 ## Use
 Just surf to one of the supported sites and watch without geo restrictions.

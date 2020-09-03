@@ -1,4 +1,4 @@
-FROM rundqvist/supervisor:latest
+FROM rundqvist/openvpn-sniproxy:latest
 
 LABEL maintainer="mattias.rundqvist@icloud.com"
 
@@ -6,9 +6,8 @@ WORKDIR /app
 
 COPY root /
 
-RUN apk add --update --no-cache sniproxy
-
-ENV HOST_IP=''
+ENV HOST_IP='' \
+    SMARTDNS_SERVICES=''
 
 VOLUME [ "/etc/dnsmasq.d" ]
 
