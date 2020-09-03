@@ -54,7 +54,7 @@ $ sudo docker run \
   -e 'VPN_USERNAME=[your vpn username]' \
   -e 'VPN_PASSWORD=[your vpn password]' \
   -e 'HOST_IP=[your server ip]' \
-  -e 'SMARTDNS_SERVICES=nrk.no dr.dk tvplayer.com ustvgo.com ustv247.tv' \
+  -e 'SMARTDNS_SERVICES=nrk.no dr.dk tvplayer.com ustvgo.tv ustv247.tv' \
   rundqvist/smartdns
 ```
 
@@ -62,7 +62,7 @@ $ sudo docker run \
 | Variable | Usage |
 |----------|-------|
 | HOST_IP | IP of the machine where SmartDNS and DNS server is running |
-| SMARTDNS_SERVICES | Services to unblock, separated with one space. Valid values are: nrk.no, dr.dk, tvplayer.com, ustvgo.com and ustv247.tv. |
+| SMARTDNS_SERVICES | Services to unblock, separated with one space. Valid values are: nrk.no, dr.dk, tvplayer.com, ustvgo.tv and ustv247.tv. |
 
 **IMPORTANT!** Container will create one VPN connection for each country needed. Be careful not to violate the terms of your VPN account.
 
