@@ -57,7 +57,7 @@ for table in "http" "https" ; do
         country=$(cat /app/smartdns/smartdns.country.conf | grep "$service" | sed 's/.*:\([A-Z]\)/\1/g');
         domains=$(cat /app/smartdns/smartdns.domain.conf | grep "$service:" | sed 's/.*:\(.*\)/\1/g');
 
-        log -d smartdns "Configuring service $service to use vpn $country and port 80$(dict port $country) for $table";
+        log -d smartdns "Configuring service $service to use vpn $country and port $range$(dict port $country) for $table";
 
         for domain in $domains ; do
             echo "$domain *:$range$(dict port $country)" >> /app/sniproxy/sniproxy.conf
