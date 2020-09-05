@@ -14,10 +14,12 @@ Please support the development by making a small donation.
 * Unblocks geo restrictions
 
 ## Supported services
-* NRK (https://tv.nrk.no)
 * DR (https://www.dr.dk/drtv/)
-* TVPlayer (https://tvplayer.com/, account needed)
-* USTVGO, USTV247 (https://ustvgo.tv, https://ustv247.tv)
+* NRK (https://tv.nrk.no)
+* SVT Play (https://svtplay.se)
+* TV Player (https://tvplayer.com/, account needed)
+* USTVGO (https://ustvgo.tv)
+* USTV247 (https://ustv247.tv)
 
 ## Requirements
 * A local DNS server that utilizes dnsmasq (for example Pi-hole, https://hub.docker.com/u/pihole/)
@@ -54,7 +56,7 @@ $ sudo docker run \
   -e 'VPN_USERNAME=[your vpn username]' \
   -e 'VPN_PASSWORD=[your vpn password]' \
   -e 'HOST_IP=[your server ip]' \
-  -e 'SMARTDNS_SERVICES=nrk.no dr.dk tvplayer.com ustvgo.tv ustv247.tv' \
+  -e 'SMARTDNS_SERVICES=nrk.no dr.dk tvplayer.com' \
   rundqvist/smartdns
 ```
 
@@ -62,7 +64,7 @@ $ sudo docker run \
 | Variable | Usage |
 |----------|-------|
 | HOST_IP | IP of the machine where SmartDNS and DNS server is running |
-| SMARTDNS_SERVICES | Services to unblock, separated with one space. Valid values are: nrk.no, dr.dk, tvplayer.com, ustvgo.tv and ustv247.tv. |
+| SMARTDNS_SERVICES | Services to unblock, separated with one space. Supported services are: dr.dk, nrk.no, svtplay.se, tvplayer.com, ustvgo.tv and ustv247.tv. |
 
 **IMPORTANT!** Container will create one VPN connection for each country needed. Be careful not to violate the terms of your VPN account.
 
