@@ -22,11 +22,14 @@ done
 var port 10
 for country in $(var VPN_COUNTRY) ; do
     
-    log -d smartdns "Configuring vpn country $country to use 80$(var port) and 81$(var port)"
+    log -d smartdns "Configuring vpn country $country to use ports 80$(var port) and 81$(var port)"
 
     dict port $country $(var port)
 
+    log -v smartdns "Add nat ($country): iptables -A OUTPUT -t nat -o eth0 -p tcp --dport 80$(var port) -j DNAT --to-destination :80"
     iptables -A OUTPUT -t nat -o eth0 -p tcp --dport 80$(var port) -j DNAT --to-destination :80
+
+    log -v smartdns "Add nat ($country): iptables -A OUTPUT -t nat -o eth0 -p tcp --dport 81$(var port) -j DNAT --to-destination :443"
     iptables -A OUTPUT -t nat -o eth0 -p tcp --dport 81$(var port) -j DNAT --to-destination :443
 
     var port $(($(var port) + 1))
@@ -51,13 +54,14 @@ for table in "http" "https" ; do
     fi
 
     for service in $(var SMARTDNS_SERVICES) ; do
-        country=$(cat /app/smartdns/smartdns.country.conf | grep "$service" | sed 's/.*:\([A-Z]\)/\1/g')
+        country=$(cat /app/smartdns/smartdns.country.conf | grep "$service" | sed 's/.*:\([A-Z]\)/\1/g');
+        domains=$(cat /app/smartdns/smartdns.domain.conf | grep "$service:" | sed 's/.*:\(.*\)/\1/g');
 
-        domains=$(cat /app/smartdns/smartdns.domain.conf | grep "$service:" | sed 's/.*:\(.*\)/\1/g')
+        log -d smartdns "Configuring service $service to use vpn $country and port 80$(dict port $country) for $table";
 
         for domain in $domains ; do
             echo "$domain *:$range$(dict port $country)" >> /app/sniproxy/sniproxy.conf
-            log -v smartdns "$domain *:$range$(dict port $country)"
+            log -v smartdns "Adding: $domain *:$range$(dict port $country)"
 
             d=$(echo "$domain" | sed -e "s/[\\]//g" -e "s/^\([^*]*\*\)\.//g")
             echo "address=/$d/$(var HOST_IP)" >> /app/smartdns/10-smartdns-tmp.conf
