@@ -1,31 +1,30 @@
 #!/bin/sh
 
-COUNTRY=$1
-TUN=$2 # tun
-IP=$3 # default gw of tun
-GW=$(echo $IP | sed 's/\([0-9\.]*\)\.[0-9][0-9]*$/\1\.1/g') # gateway
-DPORT=$(dict port $COUNTRY)
+country=$1
+tun=$2 # tun
+ip=$3 # default gw of tun
+gateway=$(echo $ip | sed 's/\([0-9\.]*\)\.[0-9][0-9]*$/\1\.1/g') # gateway
+port=$(dict port $country)
 
-sleep 1
-
-# -- Clean up old config
-ip route del default via $GW dev $TUN table $TUN
-ip rule del fwmark 0x$DPORT table $TUN
-iptables -D OUTPUT -t mangle -o eth0 -p tcp --dport 80$DPORT -j MARK --set-mark 0x$DPORT
-iptables -D OUTPUT -t mangle -o eth0 -p tcp --dport 81$DPORT -j MARK --set-mark 0x$DPORT
-iptables -D POSTROUTING -t nat -o $TUN -j MASQUERADE
-sed -i "/20$DPORT $TUN/d" /etc/iproute2/rt_tables
-# --
-
-sleep 1
+log -i smartdns "Setup routing for country $country"
+log -d smartdns "Configuration: tun: $tun, ip: $ip, gateway: $gateway, port: $port."
 
 # -- Create new config --
-echo "20$DPORT $TUN" >> /etc/iproute2/rt_tables
-ip route add default via $GW dev $TUN table $TUN
-ip rule add fwmark 0x$DPORT table $TUN
-iptables -A OUTPUT -t mangle -o eth0 -p tcp --dport 80$DPORT -j MARK --set-mark 0x$DPORT
-iptables -A OUTPUT -t mangle -o eth0 -p tcp --dport 81$DPORT -j MARK --set-mark 0x$DPORT
-iptables -A POSTROUTING -t nat -o $TUN -j MASQUERADE
-# --
+log -v smartdns "Add routing table ($country): 20$port $tun"
+echo "20$port $tun" >> /etc/iproute2/rt_tables
 
-sleep 1
+log -v smartdns "Add route ($country): default via $gateway dev $tun table $tun"
+ip route add default via $gateway dev $tun table $tun
+
+log -v smartdns "Add rule ($country): fwmark 0x$port table $tun"
+ip rule add fwmark 0x$port table $tun
+
+log -v smartdns "Add mangle ($country): iptables -A OUTPUT -t mangle -o eth0 -p tcp --dport 80$port -j MARK --set-mark 0x$port"
+iptables -A OUTPUT -t mangle -o eth0 -p tcp --dport 80$port -j MARK --set-mark 0x$port
+
+log -v smartdns "Add mangle ($country): iptables -A OUTPUT -t mangle -o eth0 -p tcp --dport 81$port -j MARK --set-mark 0x$port"
+iptables -A OUTPUT -t mangle -o eth0 -p tcp --dport 81$port -j MARK --set-mark 0x$port
+
+log -v smartdns "Add nat ($country): iptables -A POSTROUTING -t nat -o $tun -j MASQUERADE"
+iptables -A POSTROUTING -t nat -o $tun -j MASQUERADE
+# --

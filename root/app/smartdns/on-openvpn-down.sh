@@ -1,20 +1,30 @@
 #!/bin/sh
 
-COUNTRY=$1
-TUN=$2 # tun
-IP=$3 # default gw of tun
-GW=$(echo $IP | sed 's/\([0-9\.]*\)\.[0-9][0-9]*$/\1\.1/g')
-DPORT=$(dict port $COUNTRY)
+country=$1
+tun=$2 # tun
+ip=$3 # default gw of tun
+gateway=$(echo $ip | sed 's/\([0-9\.]*\)\.[0-9][0-9]*$/\1\.1/g')
+port=$(dict port $country)
 
-sleep 1
+log -i smartdns "Removing routing for country $country"
+log -d smartdns "Configuration: tun: $tun, ip: $ip, gateway: $gateway, port: $port."
 
 # -- Clean up old config
-ip route del default via $GW dev $TUN table $TUN
-ip rule del fwmark 0x$DPORT table $TUN
-iptables -D OUTPUT -t mangle -o eth0 -p tcp --dport 80$DPORT -j MARK --set-mark 0x$DPORT
-iptables -D OUTPUT -t mangle -o eth0 -p tcp --dport 81$DPORT -j MARK --set-mark 0x$DPORT
-iptables -D POSTROUTING -t nat -o $TUN -j MASQUERADE
-sed -i "/20$DPORT $TUN/d" /etc/iproute2/rt_tables
-# --
+log -v smartdns "Delete nat ($country): iptables -D POSTROUTING -t nat -o $tun -j MASQUERADE"
+iptables -D POSTROUTING -t nat -o $tun -j MASQUERADE
 
-sleep 1
+log -v smartdns "Delete mangle ($country): iptables -D OUTPUT -t mangle -o eth0 -p tcp --dport 81$port -j MARK --set-mark 0x$port"
+iptables -D OUTPUT -t mangle -o eth0 -p tcp --dport 81$port -j MARK --set-mark 0x$port
+
+log -v smartdns "Delete mangle ($country): iptables -D OUTPUT -t mangle -o eth0 -p tcp --dport 80$port -j MARK --set-mark 0x$port"
+iptables -D OUTPUT -t mangle -o eth0 -p tcp --dport 80$port -j MARK --set-mark 0x$port
+
+log -v smartdns "Delete rule ($country): fwmark 0x$port table $tun"
+ip rule del fwmark 0x$port table $tun
+
+log -v smartdns "Delete route ($country): default via $gateway dev $tun table $tun"
+ip route del default via $gateway dev $tun table $tun
+
+log -v smartdns "Delete routing table ($country): 20$port $tun"
+sed -i "/20$port $tun/d" /etc/iproute2/rt_tables
+# --

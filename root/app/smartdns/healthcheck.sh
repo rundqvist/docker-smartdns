@@ -1,5 +1,7 @@
 #!/bin/sh
 
+log -v smartdns "[health] Check health"
+
 IP=$(cat /app/openvpn/ip)
 
 var health 0
@@ -12,9 +14,11 @@ for country in $(var VPN_COUNTRY) ; do
     RC=$?
 
     if [ $RC -eq 1 ] || [ $RC":"$VPNIP = $IP ]; then
+        log -d smartdns "[health] $country: VPN down."
         echo "$country: VPN down. "
         var health 1
     else
+        log -d smartdns "[health] $country: $VPNIP."
         echo "$country: $VPNIP. "
     fi
 done
