@@ -14,12 +14,12 @@ Please support the development by making a small donation.
 * Unblocks geo restrictions
 
 ## Supported services
-* DR (https://www.dr.dk/drtv/)
-* NRK (https://tv.nrk.no)
-* SVT Play (https://svtplay.se)
-* TV Player (https://tvplayer.com/, account needed)
-* USTVGO (https://ustvgo.tv)
-* USTV247 (https://ustv247.tv)
+* DR ([dr.dk](https://www.dr.dk/drtv/))
+* NRK ([nrk.no](https://tv.nrk.no))
+* SVT Play ([svtplay.se](https://svtplay.se))
+* TV Player ([tvplayer.com](https://tvplayer.com/), account needed)
+* USTVGO ([ustvgo.tv](https://ustvgo.tv))
+* USTV247 ([ustv247.tv](https://ustv247.tv))
 
 ## Requirements
 * A local DNS server that utilizes dnsmasq (for example Pi-hole, https://hub.docker.com/u/pihole/)
