@@ -6,9 +6,11 @@ WORKDIR /app
 
 COPY root /
 
+RUN apk add --update --no-cache dnsmasq
+
 ENV HOST_IP='' \
     SMARTDNS_SERVICES=''
 
 VOLUME [ "/etc/dnsmasq.d" ]
 
-EXPOSE 80 443
+EXPOSE 53 80 443
