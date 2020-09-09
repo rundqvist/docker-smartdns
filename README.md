@@ -1,7 +1,10 @@
 # Docker SmartDNS for unblocking geo restrictions
 A smart dns container for unblocking geo restrictions.
 
-[![Docker pulls](https://img.shields.io/docker/pulls/rundqvist/smartdns.svg)](https://hub.docker.com/r/rundqvist/smartdns)
+[![docker pulls](https://img.shields.io/docker/pulls/rundqvist/smartdns.svg)](https://hub.docker.com/r/rundqvist/smartdns)
+[![image size](https://img.shields.io/docker/image-size/rundqvist/smartdns.svg)](https://hub.docker.com/r/rundqvist/smartdns)
+[![commit activity](https://img.shields.io/github/commit-activity/m/rundqvist/docker-smartdns)](https://github.com/rundqvist/docker-smartdns)
+[![last commit](https://img.shields.io/github/last-commit/rundqvist/docker-smartdns.svg)](https://github.com/rundqvist/docker-smartdns)
 
 ## Do you find this container useful? 
 Please support the development by making a small donation.

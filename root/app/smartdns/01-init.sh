@@ -1,14 +1,6 @@
 #!/bin/sh
 
-if expr "$(var HOST_IP)" : '[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$' >/dev/null; then
-
-    network=$(var HOST_IP | sed 's/\([0-9\.]*\)\.[0-9][0-9]*$/\1\.0/g')
-
-    log -d smartdns "HOST_IP is $(var HOST_IP)"
-    log -d smartdns "Network resolved from HOST_IP is $network"
-
-    var NETWORK "$network"
-else
+if ! var -e HOST_IP; then
     log -e smartdns "HOST_IP missing or wrong format. ";
     exit 1;
 fi
