@@ -33,6 +33,7 @@ Please support the development by making a small donation.
 [![Sign up](https://img.shields.io/badge/sign_up-WeVPN-e33866)](https://www.wevpn.com/aff/rundqvist)
 
 ## Components
+* Alpine Linux
 * Base container: https://hub.docker.com/r/rundqvist/openvpn-sniproxy
 * SNI Proxy (https://github.com/dlundquist/sniproxy)
 * Dnsmasq
@@ -59,7 +60,7 @@ $ sudo docker run \
   -e 'VPN_PASSWORD=[your vpn password]' \
   -e 'HOST_IP=[your server ip]' \
   -e 'SMARTDNS_SERVICES=nrk.no dr.dk tvplayer.com' \
-  -e 'SMARTDNS_STANDALONE=true' \
+  -e 'DNS_ENABLED=true' \
   rundqvist/smartdns
 ```
 
@@ -98,7 +99,7 @@ Then restart your DNS server to include the 10-smartdns.conf-file in your config
 ### Configuration
 | Variable | Usage |
 |----------|-------|
-| HOST_IP | IP of the machine where SmartDNS and DNS server is running. |
+| HOST_IP | IP of the machine where container is running. |
 | SMARTDNS_SERVICES | Services to unblock, separated with one space (see list of supported services above). |
 | SMARTDNS_STANDALONE | Set to true if you intend to use smartdns as DNS server.
 
