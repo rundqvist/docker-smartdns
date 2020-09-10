@@ -8,6 +8,7 @@ fi
 sysctl -w net.ipv4.conf.all.rp_filter=2 >/dev/null
 
 var VPN_MULTIPLE true
+var VPN_KILLSWITCH false
 var -d VPN_COUNTRY
 
 #
@@ -79,3 +80,8 @@ done
 cat /app/smartdns/10-smartdns-tmp.conf | sort -u > /app/smartdns/10-smartdns.conf
 rm -f /app/smartdns/10-smartdns-tmp.conf
 cp -f /app/smartdns/10-smartdns.conf /etc/dnsmasq.d/10-smartdns.conf
+
+if [ -f /etc/dnsmasq.d/10-sniproxy.conf ] ; then
+    log -v smartdns "Removing /etc/dnsmasq.d/10-sniproxy.conf"
+    #rm -f /etc/dnsmasq.d/10-sniproxy.conf
+fi
