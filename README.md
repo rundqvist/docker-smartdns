@@ -64,7 +64,7 @@ $ sudo docker run \
   rundqvist/smartdns
 ```
 
-Then configure your clients to use the new DNS. For example in your router.
+Then configure your clients to use HOST_IP as DNS server (preferrably in your router).
 
 ### Example setup with external DNS
 If you are using an external DNS server that utilizes dnsmasq (for example Pi-hole, https://hub.docker.com/u/pihole/), you can let the container copy needed settings to the /etc/dnsmasq.d/-folder.

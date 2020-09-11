@@ -83,5 +83,5 @@ cp -f /app/smartdns/10-smartdns.conf /etc/dnsmasq.d/10-smartdns.conf
 
 if [ -f /etc/dnsmasq.d/10-sniproxy.conf ] ; then
     log -v smartdns "Removing /etc/dnsmasq.d/10-sniproxy.conf"
-    #rm -f /etc/dnsmasq.d/10-sniproxy.conf
+    rm -f /etc/dnsmasq.d/10-sniproxy.conf
 fi
