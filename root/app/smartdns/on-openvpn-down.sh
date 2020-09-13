@@ -4,7 +4,7 @@ country=$1
 tun=$2 # tun
 ip=$3 # default gw of tun
 gateway=$(echo $ip | sed 's/\([0-9\.]*\)\.[0-9][0-9]*$/\1\.1/g')
-port=$(dict port $country)
+port=$(var -k port $country)
 
 log -i smartdns "Removing routing for country $country"
 log -d smartdns "Configuration: tun: $tun, ip: $ip, gateway: $gateway, port: $port."

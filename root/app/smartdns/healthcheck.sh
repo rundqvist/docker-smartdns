@@ -8,7 +8,7 @@ var health 0
 
 for country in $(var VPN_COUNTRY) ; do
 
-    port=$(dict port $country)
+    port=$(var -k port $country)
 
     VPNIP=$(wget http://api.ipify.org:80$port -O - -q 2>/dev/null)
     RC=$?
