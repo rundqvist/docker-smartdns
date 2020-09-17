@@ -18,7 +18,7 @@ Please support the development by making a small donation.
 
 ## Supported services
 * DR - [dr.dk](https://www.dr.dk/drtv/)
-* ITV - [itv.com](https://www.itv.com)
+* ITV - [itv.com](https://www.itv.com) (account needed, live tv only)
 * NRK - [nrk.no](https://tv.nrk.no)
 * SVT Play - [svtplay.se](https://svtplay.se)
 * TV Player - [tvplayer.com](https://tvplayer.com/) (account needed)
