@@ -22,7 +22,7 @@ for country in $(var VPN_COUNTRY) ; do
         if [ "$count" = "3" ]
         then
             var -d fail
-            log -i smartdns "Restarting $country VPN."
+            log -i smartdns "[health] Restarting $country VPN."
             pid=$(ps -o pid,args | sed -n "/openvpn\/config-$country/p" | awk '{print $1}')
 
             kill -s SIGHUP $pid

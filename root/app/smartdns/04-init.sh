@@ -1,10 +1,5 @@
 #!/bin/sh
 
-if ! var -e HOST_IP; then
-    log -e smartdns "HOST_IP missing or wrong format. ";
-    exit 1;
-fi
-
 sysctl -w net.ipv4.conf.all.rp_filter=2 >/dev/null
 
 var VPN_MULTIPLE true
@@ -14,11 +9,11 @@ var -d VPN_COUNTRY
 #
 # Resolve needed countries
 #
-for service in $(var SMARTDNS_SERVICES) ; do
-    log -d smartdns "Configuring $service"
+for service in $(var SMARTDNS_SERVICES)
+do
     country=$(cat /app/smartdns/smartdns.country.conf | grep "$service" | sed 's/.*:\([A-Z]\)/\1/g')
 
-    log -d smartdns "Service $service requires vpn $country"
+    log -i smartdns "Service '$service' requires $country VPN."
     var -a VPN_COUNTRY -v $country
 done
 
@@ -28,7 +23,7 @@ done
 var port 10
 for country in $(var VPN_COUNTRY) ; do
     
-    log -d smartdns "Configuring vpn country $country to use ports 80$(var port) and 81$(var port)"
+    log -v smartdns "Configuring vpn country $country to use ports 80$(var port) and 81$(var port)"
 
     var -k port $country $(var port)
 
@@ -47,7 +42,7 @@ var -d port
 #
 
 > /app/smartdns/10-smartdns-tmp.conf
-log -i smartdns "Creating sniproxy config"
+log -d smartdns "Creating sniproxy config"
 mkdir -p /etc/sniproxy
 cp -f /app/smartdns/sniproxy.template.conf /app/sniproxy/sniproxy.conf
 

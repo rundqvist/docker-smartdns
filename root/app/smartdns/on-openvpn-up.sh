@@ -6,8 +6,7 @@ ip=$3 # default gw of tun
 gateway=$(echo $ip | sed 's/\([0-9\.]*\)\.[0-9][0-9]*$/\1\.1/g') # gateway
 port=$(var -k port $country)
 
-log -i smartdns "Setup routing for country $country"
-log -d smartdns "Configuration: tun: $tun, ip: $ip, gateway: $gateway, port: $port."
+log -d smartdns "Setup routing for country $country: tun: $tun, ip: $ip, gateway: $gateway, port: $port."
 
 # -- Create new config --
 log -v smartdns "Add routing table ($country): 20$port $tun"

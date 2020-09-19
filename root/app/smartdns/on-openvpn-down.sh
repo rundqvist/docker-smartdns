@@ -6,8 +6,7 @@ ip=$3 # default gw of tun
 gateway=$(echo $ip | sed 's/\([0-9\.]*\)\.[0-9][0-9]*$/\1\.1/g')
 port=$(var -k port $country)
 
-log -i smartdns "Removing routing for country $country"
-log -d smartdns "Configuration: tun: $tun, ip: $ip, gateway: $gateway, port: $port."
+log -d smartdns "Remove routing for country $country: tun: $tun, ip: $ip, gateway: $gateway, port: $port."
 
 # -- Clean up old config
 log -v smartdns "Delete nat ($country): iptables -D POSTROUTING -t nat -o $tun -j MASQUERADE"
