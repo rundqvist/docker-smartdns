@@ -15,6 +15,8 @@ Please support the development by making a small donation.
 
 ## Features
 * Unblocks geo restrictions
+* Self healing (restarts vpn if no connection)
+* Healthcheck
 
 ## Supported services
 * DR - [dr.dk](https://www.dr.dk/drtv/)
