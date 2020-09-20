@@ -2,7 +2,7 @@
 
 log -v smartdns "[health] Check health"
 
-var health 0
+var smartdns.health 0
 
 for country in $(var VPN_COUNTRY) ; do
 
@@ -12,8 +12,8 @@ for country in $(var VPN_COUNTRY) ; do
     
     if [ $? -eq 1 ] || [ "$VPNIP" = "$(var publicIp)" ]
     then
-        var -k fail $country + 1
-        count=$(var -k fail $country)
+        var -k smartdns.fail $country + 1
+        count=$(var -k smartdns.fail $country)
 
         log -d smartdns "[health] $country: VPN down ($count)."
 
@@ -21,20 +21,20 @@ for country in $(var VPN_COUNTRY) ; do
 
         if [ "$count" = "3" ]
         then
-            var -d fail
+            var -d smartdns.fail
             log -i smartdns "[health] Restarting $country VPN."
             pid=$(ps -o pid,args | sed -n "/openvpn\/config-$country/p" | awk '{print $1}')
 
             kill -s SIGHUP $pid
         fi
  
-        var health 1
+        var smartdns.health 1
     else
         log -d smartdns "[health] $country: $VPNIP."
         echo "$country: $VPNIP. "
 
-        var -k fail -d $country
+        var -k smartdns.fail -d $country
     fi
 done
 
-exit $(var health);
+exit $(var smartdns.health);
