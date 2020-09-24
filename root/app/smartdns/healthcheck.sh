@@ -12,6 +12,7 @@ do
     # Delete stored ip
     var -k vpn.$country -d ip
 
+    # Check ip
     for protocol in "http" "https"
     do
         # Sleep to not spam ipify.org
@@ -25,10 +26,12 @@ do
 
         if [ $? -eq 1 ] || [ "$ip" = "$(var publicIp)" ] || [ -z "$ip" ]
         then
+            # Check failed. Delete ip and break out of loop (no need to check next port if we already have failed)
             log -d smartdns "$country ip check failed on port $range$port ($protocol). Breaking."
             var -k vpn.$country -d ip
             break
         else
+            # Check success. Append (unique) ip and continue.
             log -v smartdns "$country ip is: $ip on port $range$port ($protocol)."
             var -k vpn.$country -a ip -v "$ip"
         fi
@@ -36,10 +39,13 @@ do
     
     log -v smartdns "$country ip count: $(var -k vpn.$country -c ip)"
 
+    # Check if country vpn is healthy.
     if [ $(var -k vpn.$country -c ip) -eq 1 ]
     then
-        #success
+        # One (and only one) ip stored. Vpn is healthy.
         var -k vpn.$country -d fail
+
+        # Log ip only if differs from last check (and since we delete on fail, if vpn just recovered).
         currentIp="$(var -k vpn.$country ip)"
         if [ "$currentIp" != "$previousIp" ]
         then
@@ -49,13 +55,15 @@ do
         fi
         echo "$country: $currentIp. "
     else
-        #fail
+        # Zero or multiple ip stored. Something is wrong. Increase fail count and set this health check run to unhealthy.
         var -k vpn.$country fail + 1
         var smartdns.health 1
 
+        # Check if we need to restart.
         count="$(var -k vpn.$country fail)"
         if [ "$count" = "3" ]
         then
+            # Restart vpn if failed 3 times...
             var -k vpn.$country -d fail
             log -e smartdns "Vpn ($country) unhealthy ($count). Restarting vpn."
             pid=$(ps -o pid,args | sed -n "/openvpn\/config-$country/p" | awk '{print $1}')
@@ -63,6 +71,7 @@ do
             kill -s SIGHUP $pid
             echo "$country: Restarted. "
         else
+            # ...otherwise just warn.
             log -w smartdns "Vpn ($country) unhealthy ($count)."
             echo "$country: Unhealthy. "
         fi
