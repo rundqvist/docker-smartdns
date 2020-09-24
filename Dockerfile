@@ -13,5 +13,5 @@ VOLUME [ "/etc/dnsmasq.d" ]
 
 EXPOSE 53 80 443
 
-HEALTHCHECK --interval=180s --timeout=120s --start-period=30s \  
+HEALTHCHECK --interval=120s --timeout=90s --start-period=30s \  
  CMD /bin/sh /app/healthcheck.sh
