@@ -17,7 +17,7 @@ do
 
     if [ -z "$entry" ] 
     then
-        log -i smartdns "Service '$service' isn't supported. Valid services are: $(cat /app/smartdns/smartdns.country.conf | sed 's/\(.*\):.*/\1/g' | tr '\n' ' ')"
+        log -i smartdns "Service '$service' isn't supported. Valid services are: $(cat /app/smartdns/smartdns.country.conf | sed 's/\(.*\):.*/\1/g' | tr '\n' ' ')."
         exit 1;
     fi
 done

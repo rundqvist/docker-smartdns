@@ -12,3 +12,6 @@ ENV HOST_IP='' \
 VOLUME [ "/etc/dnsmasq.d" ]
 
 EXPOSE 53 80 443
+
+HEALTHCHECK --interval=180s --timeout=120s --start-period=30s \  
+ CMD /bin/sh /app/healthcheck.sh
