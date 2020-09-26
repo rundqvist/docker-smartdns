@@ -16,6 +16,7 @@ Please support the development by making a small donation.
 ## Features
 * Unblocks geo restrictions
 * Self healing (restarts vpn if connection breaks down)
+* Built in dns server
 * Healthcheck
 
 ## Supported services

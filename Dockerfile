@@ -6,8 +6,7 @@ WORKDIR /app
 
 COPY root /
 
-ENV HOST_IP='' \
-    SMARTDNS_SERVICES=''
+ENV SMARTDNS_SERVICES=''
 
 VOLUME [ "/etc/dnsmasq.d" ]
 
