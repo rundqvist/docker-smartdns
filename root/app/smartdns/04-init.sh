@@ -22,8 +22,8 @@ log -i smartdns "Selected services require $(var VPN_COUNTRY | wc -l) vpn connec
 # Route all requests to 80/443
 #
 var port 10
-for country in $(var VPN_COUNTRY) ; do
-    
+for country in $(var VPN_COUNTRY)
+do
     port=$(var port)
     http=$(var -k vpn.range http)
     https=$(var -k vpn.range https)
