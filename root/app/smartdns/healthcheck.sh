@@ -22,7 +22,7 @@ do
 
         log -v smartdns "Checking ip for $country $protocol $range$port (previousIp: $previousIp)."
 
-        ip=$(wget $protocol://api.ipify.org:$range$port -T 10 -O - -q 2>/dev/null)
+        ip=$(echoip -m $protocol -p $range$port)
 
         if [ $? -eq 1 ] || [ "$ip" = "$(var publicIp)" ] || [ -z "$ip" ]
         then
