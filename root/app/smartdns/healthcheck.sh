@@ -15,9 +15,6 @@ do
     # Check ip
     for protocol in "http" "https"
     do
-        # Sleep to not spam ipify.org
-        sleep 1
-
         range=$(var -k vpn.range $protocol)
 
         log -v smartdns "Checking ip for $country $protocol $range$port (previousIp: $previousIp)."
