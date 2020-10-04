@@ -3,12 +3,19 @@
 #
 # Resolve needed countries
 #
+log -i smartdns "Selected services: $(var SMARTDNS_SERVICES | tr '\n' ' ')"
+
 for service in $(var SMARTDNS_SERVICES)
 do
     country=$(var -k smartdns.country "$service")
     if [ $? -eq 1 ] 
     then
-        log -i smartdns "Service '$service' isn't supported. Valid services are: $(var -k smartdns.country | tr '\n' ' ')."
+        log -e smartdns "Service '$service' isn't supported."
+        log -i smartdns "Valid services are:"
+        for validService in $(var -k smartdns.country)
+        do
+            log -i smartdns "- $validService"
+        done
         exit 1;
     fi
 
@@ -16,7 +23,7 @@ do
     var -a VPN_COUNTRY -v $country
 done
 
-log -i smartdns "Selected services require $(var VPN_COUNTRY | wc -l) vpn connection(s)."
+log -i smartdns "Selected services require $(var VPN_COUNTRY | wc -l) vpn connection(s). Countries: $(var VPN_COUNTRY | tr '\n' ' ')"
 
 #
 # Route all requests to 80/443
