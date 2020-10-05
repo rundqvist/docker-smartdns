@@ -113,6 +113,7 @@ See image ([rundqvist/openvpn](https://hub.docker.com/r/rundqvist/openvpn)) for 
 | _VPN_PASSWORD_ | Your VPN password. |
 | VPN_INCLUDED_REMOTES | Host names separated by one space. VPN will _only_ connect to entered remotes. |
 | VPN_EXCLUDED_REMOTES | Host names separated by one space. VPN will _not_ connect to entered remotes. |
+| VPN_REMOTES_FILTER_MODE | If set, included/excluded-filtering of remotes resulting in an empty list will cause vpn to not connect. <br />`strict`, `strict-included` or `strict-excluded`. |
 | VPN_RANDOM_REMOTE | Connects to random remote. <br />`true` or `false` (default). |
 
 Variables in _cursive_ is mandatory.

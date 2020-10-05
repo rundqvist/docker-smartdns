@@ -43,6 +43,7 @@ var -k smartdns.domain -a ardmediathek.de -v 'artelive.*\.akamaihd\.net'
 var -k smartdns.domain -a ardmediathek.de -v 'kika.*\.akamaihd\.net'
 var -k smartdns.domain -a ardmediathek.de -v 'tagesschau.*\.akamaihd\.net'
 var -k smartdns.domain -a ardmediathek.de -v 'dwstream.*\.akamaihd\.net'
+var -k smartdns.domain -a ardmediathek.de -v 'cdn\.bunchbox\.co'
 
 var -k smartdns.domain -a dr.dk -v 'dr\.dk'
 var -k smartdns.domain -a dr.dk -v 'dr.*\.akamaized\.net'
