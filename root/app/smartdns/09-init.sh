@@ -7,7 +7,7 @@ do
     then
         var smartdns.anyup true
     else
-        log -e smartdns "No $country vpn. Services affected: $(var -k smartdns.country -w $country | tr '\n' ' ') "
+        log -e "No $country vpn. Services affected: $(var -k smartdns.country -w $country | tr '\n' ' ') "
     fi
 done
 

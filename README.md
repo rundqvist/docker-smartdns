@@ -20,6 +20,8 @@ Please support the development by making a small donation.
 * Healthcheck
 
 ## Supported services
+* 3sat - [3sat.de](https://www.3sat.de/)
+* ARD Mediathek - [ardmediathek.de](https://www.ardmediathek.de/)
 * DR - [dr.dk](https://www.dr.dk/drtv/)
 * ITV - [itv.com](https://www.itv.com) (account needed, live tv only)
 * NRK - [nrk.no](https://tv.nrk.no)
@@ -28,6 +30,7 @@ Please support the development by making a small donation.
 * USTVGO - [ustvgo.tv](https://ustvgo.tv)
 * USTV247 - [ustv247.tv](https://ustv247.tv)
 * YLE - [yle.fi](https://areena.yle.fi/tv) (live tv only)
+* ZDF - [zdf.de](https://www.zdf.de/)
 
 ## Requirements
 * Port 80 & 443 available on host
@@ -110,6 +113,7 @@ See image ([rundqvist/openvpn](https://hub.docker.com/r/rundqvist/openvpn)) for 
 | _VPN_PASSWORD_ | Your VPN password. |
 | VPN_INCLUDED_REMOTES | Host names separated by one space. VPN will _only_ connect to entered remotes. |
 | VPN_EXCLUDED_REMOTES | Host names separated by one space. VPN will _not_ connect to entered remotes. |
+| VPN_REMOTES_FILTER_MODE | If set, included/excluded-filtering of remotes resulting in an empty list will cause vpn to not connect. <br />`strict`, `strict-included` or `strict-excluded`. |
 | VPN_RANDOM_REMOTE | Connects to random remote. <br />`true` or `false` (default). |
 
 Variables in _cursive_ is mandatory.

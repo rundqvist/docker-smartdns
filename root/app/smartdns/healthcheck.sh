@@ -17,24 +17,24 @@ do
     do
         range=$(var -k vpn.range $protocol)
 
-        log -v smartdns "Checking ip for $country $protocol $range$port (previousIp: $previousIp)."
+        log -v "Checking ip for $country $protocol $range$port (previousIp: $previousIp)."
 
         ip=$(echoip -m $protocol -p $range$port)
 
         if [ $? -eq 1 ] || [ "$ip" = "$(var publicIp)" ] || [ -z "$ip" ]
         then
             # Check failed. Delete ip and break out of loop (no need to check next port if we already have failed)
-            log -d smartdns "$country ip check failed on port $range$port ($protocol). Breaking."
+            log -d "$country ip check failed on port $range$port ($protocol). Breaking."
             var -k vpn.$country -d ip
             break
         else
             # Check success. Append (unique) ip and continue.
-            log -v smartdns "$country ip is: $ip on port $range$port ($protocol)."
+            log -v "$country ip is: $ip on port $range$port ($protocol)."
             var -k vpn.$country -a ip -v "$ip"
         fi
     done
     
-    log -v smartdns "$country ip count: $(var -k vpn.$country -c ip)"
+    log -v "$country ip count: $(var -k vpn.$country -c ip)"
 
     # Check if country vpn is healthy.
     if [ $(var -k vpn.$country -c ip) -eq 1 ]
@@ -46,9 +46,9 @@ do
         currentIp="$(var -k vpn.$country ip)"
         if [ "$currentIp" != "$previousIp" ]
         then
-            log -i smartdns "Vpn ($country) healthy. Ip is: $currentIp."
+            log -i "Vpn ($country) healthy. Ip is: $currentIp."
         else
-            log -v smartdns "Vpn ($country) healthy. Ip is: $currentIp."
+            log -v "Vpn ($country) healthy. Ip is: $currentIp."
         fi
         echo "$country: $currentIp. "
     else
@@ -62,14 +62,14 @@ do
         then
             # Restart vpn if failed 3 times...
             var -k vpn.$country -d fail
-            log -e smartdns "Vpn ($country) unhealthy ($count). Restarting vpn."
+            log -e "Vpn ($country) unhealthy ($count). Restarting vpn."
             pid=$(ps -o pid,args | sed -n "/openvpn\/config-$country/p" | awk '{print $1}')
 
             kill -s SIGHUP $pid
             echo "$country: Restarted. "
         else
             # ...otherwise just warn.
-            log -w smartdns "Vpn ($country) unhealthy ($count)."
+            log -w "Vpn ($country) unhealthy ($count)."
             echo "$country: Unhealthy. "
         fi
     fi
