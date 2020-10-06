@@ -40,7 +40,7 @@ Please support the development by making a small donation.
 [![Sign up](https://img.shields.io/badge/sign_up-WeVPN-e33866)](https://www.wevpn.com/aff/rundqvist)
 
 ## Components
-Built on [rundqvist/openvpn-sniproxy](https://hub.docker.com/r/rundqvist/openvpn-sniproxy) container.
+Built on [rundqvist/sniproxy-openvpn](https://hub.docker.com/r/rundqvist/sniproxy-openvpn) container.
 * [Alpine Linux](https://www.alpinelinux.org)
 * [Supervisor](https://github.com/Supervisor/supervisor)
 * [OpenVPN](https://github.com/OpenVPN/openvpn)
