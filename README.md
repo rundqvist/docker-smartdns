@@ -34,9 +34,10 @@ Please support the development by making a small donation.
 
 ## Requirements
 * Port 80 & 443 available on host
-* A supported VPN account (currently [ipvanish](https://www.ipvanish.com/?a_bid=48f95966&a_aid=5f3eb2f0be07f) or [wevpn](https://www.wevpn.com/aff/rundqvist))
+* A supported VPN account.
 
 [![Sign up](https://img.shields.io/badge/sign_up-IPVanish_VPN-6fbc44)](https://www.ipvanish.com/?a_bid=48f95966&a_aid=5f3eb2f0be07f)
+[![Sign up](https://img.shields.io/badge/sign_up-Ivacy_VPN-3dacf3)](https://www.ivacy.com/get-30-days-free-vpn/?refer=802326)
 [![Sign up](https://img.shields.io/badge/sign_up-WeVPN-e33866)](https://www.wevpn.com/aff/rundqvist)
 
 ## Components
@@ -108,7 +109,7 @@ See image ([rundqvist/openvpn](https://hub.docker.com/r/rundqvist/openvpn)) for 
 | _HOST_IP_ | IP of the machine where container is running. |
 | _SMARTDNS_SERVICES_ | Services to unblock, separated with one space (see list of supported services above). |
 | DNS_ENABLED | Enables DNS server in container. <br />`true` or `false` (default). |
-| _VPN_PROVIDER_ | Your VPN provider ("[ipvanish](https://www.ipvanish.com/?a_bid=48f95966&a_aid=5f3eb2f0be07f)" or "[wevpn](https://www.wevpn.com/aff/rundqvist)"). |
+| _VPN_PROVIDER_ | Supported providers:<br />- [ipvanish](https://www.ipvanish.com/?a_bid=48f95966&a_aid=5f3eb2f0be07f)<br />- [ivacy](https://www.ivacy.com/get-30-days-free-vpn/?refer=802326)<br />- [wevpn](https://www.wevpn.com/aff/rundqvist) |
 | _VPN_USERNAME_ | Your VPN username. |
 | _VPN_PASSWORD_ | Your VPN password. |
 | VPN_INCLUDED_REMOTES | Host names separated by one space. VPN will _only_ connect to entered remotes. |

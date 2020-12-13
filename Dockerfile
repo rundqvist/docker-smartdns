@@ -1,4 +1,4 @@
-FROM rundqvist/sniproxy-openvpn:1.1
+FROM rundqvist/sniproxy-openvpn:1.2
 
 LABEL maintainer="mattias.rundqvist@icloud.com"
 
