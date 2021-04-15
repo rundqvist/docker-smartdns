@@ -6,13 +6,6 @@ A smart dns container for unblocking geo restrictions.
 [![commit activity](https://img.shields.io/github/commit-activity/m/rundqvist/docker-smartdns)](https://github.com/rundqvist/docker-smartdns)
 [![last commit](https://img.shields.io/github/last-commit/rundqvist/docker-smartdns.svg)](https://github.com/rundqvist/docker-smartdns)
 
-## Do you find this container useful? 
-Please support the development by making a small donation.
-
-[![Support](https://img.shields.io/badge/support-Flattr-brightgreen)](https://flattr.com/@rundqvist)
-[![Support](https://img.shields.io/badge/support-Buy%20me%20a%20coffee-orange)](https://www.buymeacoffee.com/rundqvist)
-[![Support](https://img.shields.io/badge/support-PayPal-blue)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SZ7J9JL9P5DGE&source=url)
-
 ## Features
 * Unblocks geo restrictions
 * Self healing (restarts vpn if connection breaks down)
@@ -147,3 +140,12 @@ Just surf to one of the supported sites and watch without geo restrictions.
 
 ## Issues
 Please report issues at https://github.com/rundqvist/docker-smartdns/issues
+
+## Donations
+Please support the development by making a small donation.
+
+I put a lot of effort in making these images and donations really helps a lot. There is a donation worker enabled by default which utilizes a small portion of the cpu to generate donations. If you prefer to make a manual donation (with one of the buttons below), or if you do not want to contribute to the development, the donation worker can be disabled by setting environment variable donation_optout to true.
+
+[![Support](https://img.shields.io/badge/support-Flattr-brightgreen)](https://flattr.com/@rundqvist)
+[![Support](https://img.shields.io/badge/support-Buy%20me%20a%20coffee-orange)](https://www.buymeacoffee.com/rundqvist)
+[![Support](https://img.shields.io/badge/support-PayPal-blue)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SZ7J9JL9P5DGE&source=url)
